@@ -1,4 +1,4 @@
-# Digital Serium
+# Salutis
 
 L'equipe de Serium à pour but d'améliorer la communication entre les médecins et leurs patients, dans un objectif de prévention.
 Il faudrait pouvoir récolter des données de santé de façons journaliere, qui serait ensuite transmise au médecin traitant qui pourrait alors intervenir le plus tot posible en cas d’anomalie.
