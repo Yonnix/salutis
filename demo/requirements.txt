@@ -1,2 +1,6 @@
 opencv-python
 mediapipe
+tensorflow
+numpy
+keras-cv
+matplotlib
