@@ -4,3 +4,4 @@ tensorflow
 numpy
 keras-cv
 matplotlib
+ultralytics==8.0.196

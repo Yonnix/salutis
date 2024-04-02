@@ -1,2 +1,6 @@
 __pycache__
 venv
+*.cache
+*.0
+*.out
+labels.cache
