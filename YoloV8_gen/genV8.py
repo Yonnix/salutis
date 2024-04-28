@@ -27,12 +27,13 @@ def open_images(image_folder_path):
 
 class Coordinates:
     
-    def __init__(self, image, file_name):
+    def __init__(self, image, file_name, save_path):
         self.image = image
         self.height, self.width, self.channels = image.shape
         self.click_coord = []
         self.string = ""
         self.file_name = file_name
+        self.save_path = save_path
         # self.should_close = False 
 
 
@@ -96,7 +97,7 @@ class Coordinates:
         X, Y = Coordinates.middle(self)
         h, w = Coordinates.hight_width(self)
         self.string = "0 " + str(X) + " " + str(Y) + " " + str(h) + " " + str(w) + "\n"
-        with open(self.file_name + ".txt", "a") as file:
+        with open(self.save_path, "a") as file:
             file.write(self.string)
     
 
@@ -104,16 +105,21 @@ def main():
     """This function is the main function of the program
     """
     images_path = sys.argv[1] # Path in the command line to the images
+    labels_path = sys.argv[2] # Path in the command line to the labels
     images = open_images(images_path)
+    counter = 0
     # for image in images:
     #     cv2.imshow("test", image)
     try:
-        for image_name, image in images:
-            # Create .txt file with the same name as the image
-            file_name = image_name.split("/")[-1].split(".jpg")[0] + ".txt"
-            print(file_name)
+        for image_path, image in images:
+            os.rename(image_path, os.path.join(images_path, str(counter) + ".jpg")) 
+            # Create .txt file with the same name as the image 
+            images_path = os.path.join(images_path, str(counter) + ".jpg") 
+            file_name = os.path.join(images_path.split("/")[-1].split(".")[0] + ".txt") 
+            print (file_name) 
+            save_path = os.path.join(labels_path, file_name) 
             cv2.imshow('image', image)
-            coordinates = Coordinates(image, file_name)
+            coordinates = Coordinates(image, file_name, save_path)
             is_closed = False
             while not is_closed:
                 cv2.imshow('image', image)
