@@ -99,8 +99,10 @@ class Coordinates:
         self.string = "0 " + str(X) + " " + str(Y) + " " + str(h) + " " + str(w) + "\n"
         with open(self.save_path, "a") as file:
             file.write(self.string)
-    
-
+            #remove the last line if empty
+            file.seek(0, os.SEEK_END)
+            
+                
 def main():
     """This function is the main function of the program
     """
@@ -108,14 +110,16 @@ def main():
     labels_path = sys.argv[2] # Path in the command line to the labels
     images = open_images(images_path)
     counter = 0
-    # for image in images:
-    #     cv2.imshow("test", image)
     try:
         for image_path, image in images:
-            os.rename(image_path, os.path.join(images_path, str(counter) + ".jpg")) 
+            extension = os.path.splitext(image_path)[1]
+            new_image_path = os.path.join(images_path, str(counter) + extension)
+            while os.path.exists(new_image_path):
+                counter += 1
+                new_image_path = os.path.join(images_path, str(counter) + extension)
+            os.rename(image_path, new_image_path) 
             # Create .txt file with the same name as the image 
-            images_path = os.path.join(images_path, str(counter) + ".jpg") 
-            file_name = os.path.join(images_path.split("/")[-1].split(".")[0] + ".txt") 
+            file_name = os.path.join(new_image_path.split("/")[-1].split(".")[0] + ".txt") 
             print (file_name) 
             save_path = os.path.join(labels_path, file_name) 
             cv2.imshow('image', image)
@@ -128,6 +132,7 @@ def main():
                 if k == ord(' '):  # space key
                     is_closed = True
             cv2.waitKey(1)  # Ensure the window is destroyed before the next image is displayed
+            counter += 1
     except KeyboardInterrupt:
         print("\n Interrupted by user")
 
