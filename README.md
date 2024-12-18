@@ -1,3 +1,2 @@
 # Salutis
-Smart mirror for monitoring health
-
+Recongnition tool for acne.
